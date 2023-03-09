@@ -3,7 +3,7 @@
 ## 二阶锥
 
 二阶锥（second-order cone，又称ice-cream/Lorentz cone）的形式为：
-$$Q^{n+1}=\{(t,x)\in \mathbb{R} \times \mathbb{R}^n:t\geq \Vert x\Vert_2\}$$ 
+$$Q^{n+1}=\{(t,x)\in R \times R^n:t\geq \Vert x\Vert_2\}$$ 
 即：满足 $t\geq \Vert x\Vert_2$ 的所有 $(t,x)$ 。
 
 $Q$ 的上标表示了它的维度。因 $t$ 为1维， $x$ 为 $n$ 维向量，故 $Q$ 为 $n+1$ 维。从几何的角度看，在 $x$ 为2维的情况下，二阶锥表示了一个圆锥上方的所有空间，所以也被称为“冰淇淋锥”。
@@ -29,4 +29,32 @@ $$x\geq 0$$
 
 （Github似乎不支持```align```语法，导致这个公式无法对齐，不够优雅）
 
-从锥规划的角度看， $x\geq0$ 实际上就是 $x\in R_+^n$ 。当我们把此处的非负象限锥 $R_+^n$ 改为二阶锥或者半正定锥，自然就从线性规划推广出了锥线性规划。
+从锥规划的角度看， $x\geq0$ 实际上就是 $x\in R_+^n$ ！当我们把此处的非负象限锥 $R_+^n$ 改为二阶锥或者半正定锥，自然就从线性规划推广出了锥线性规划。假设我们把 $R_+^n$ 改成锥 $$K$$ ，那么锥规划写作：
+
+$$\min \quad c^Tx$$
+
+$$s.t \quad Ax=b$$
+
+$$x\in K$$
+
+为了看起来跟线性规划更像，换一个符号表示，定义：
+
+ $x\succeq_K 0 \Leftrightarrow x\in K$
+
+就得到了锥规划的“标准型”：
+
+$$\min \quad c^Tx$$
+
+$$s.t \quad Ax=b$$
+
+$$x\succeq_K 0$$
+
+如果“不等式”右边不是0，也是同样的道理：在非负象限锥下，$x\geq y \Leftrightarrow x-y\geq 0  \Leftrightarrow x-y\in R_+^n$；在锥 $$K$$ 下，$x\succeq_K y \Leftrightarrow x-y\succeq_K 0  \Leftrightarrow x-y\in K$。
+
+注意到二阶锥中出现了 $x$ 的2范数，因此二阶锥规划实际上可以处理二次问题，适用范围比线性规划更广。
+
+## 对偶锥
+
+
+
+## 锥线性规划的对偶问题
