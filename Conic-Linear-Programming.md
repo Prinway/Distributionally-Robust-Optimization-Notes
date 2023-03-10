@@ -27,9 +27,9 @@ $$s.t \quad Ax=b$$
 
 $$x\geq 0$$
 
-（Github似乎不支持```align```语法，导致这个公式无法对齐，不够优雅）
+（Github似乎不支持```align```语法，导致这些优化模型的公式都无法对齐，不够优雅）
 
-从锥规划的角度看， $x\geq0$ 实际上就是 $x\in R_+^n$ ！当我们把此处的非负象限锥 $R_+^n$ 改为二阶锥或者半正定锥，自然就从线性规划推广出了锥线性规划。假设我们把 $R_+^n$ 改成锥 $$K$$ ，那么锥规划写作：
+从锥规划的角度看， $x\geq0$ 实际上就是 $x\in R_+^n$ ！当我们把此处的非负象限锥 $R_+^n$ 改为二阶锥或者半正定锥，自然就从线性规划推广出了锥线性规划。假设我们把 $R_+^n$ 改成锥 $K$ ，那么锥规划写作：
 
 $$\min \quad c^Tx$$
 
@@ -37,11 +37,7 @@ $$s.t \quad Ax=b$$
 
 $$x\in K$$
 
-为了看起来跟线性规划更像，换一个符号表示，定义：
-
- $x\succeq_K 0 \Leftrightarrow x\in K$
-
-就得到了锥规划的“标准型”：
+为了看起来跟线性规划更像，我们把不等号也进行推广，定义： $x\succeq_K 0 \Leftrightarrow x\in K$，就得到了锥规划的“标准型”：
 
 $$\min \quad c^Tx$$
 
@@ -49,12 +45,26 @@ $$s.t \quad Ax=b$$
 
 $$x\succeq_K 0$$
 
-如果“不等式”右边不是0，也是同样的道理：在非负象限锥下，$x\geq y \Leftrightarrow x-y\geq 0  \Leftrightarrow x-y\in R_+^n$；在锥 $$K$$ 下，$x\succeq_K y \Leftrightarrow x-y\succeq_K 0  \Leftrightarrow x-y\in K$。
+如果“不等号”右边不是0，也是同样的道理：在非负象限锥下，$x\geq y \Leftrightarrow x-y\geq 0  \Leftrightarrow x-y\in R_+^n$ ；在锥 $K$ 下，$x\succeq_K y \Leftrightarrow x-y\succeq_K 0  \Leftrightarrow x-y\in K$ 。
 
 注意到二阶锥中出现了 $x$ 的2范数，因此二阶锥规划实际上可以处理二次问题，适用范围比线性规划更广。
 
 ## 对偶锥
 
+锥 $K$ 的对偶锥定义为：
 
+$$K^*=\{y:<x,y>\geq0 \quad \forall x\in K\}$$
+
+其中 $<x,y>$ 为 $x$ 与 $y$ 的内积。直观地看， $K^*$ 中的所有元素必须满足与 $K$ 中的所有元素的夹角不超过90°。显然，对于 $R_+^n$ ，其对偶锥就是它自己，这种对偶锥就是自己的锥叫做自对偶锥（self-dual cone）。非负象限锥、二阶锥、半正定锥都是对偶锥，所以它们在锥规划中发挥了重要作用。
 
 ## 锥线性规划的对偶问题
+
+为了更加具有一般性，以后目标函数就用内积的形式写了。考虑原问题：
+
+$$\min \quad <c,x>$$
+
+$$s.t \quad <a_i,x>=b_i,\quad i=1,2,...,m$$
+
+$$x\succeq_K 0$$
+
+对等式约束引入拉格朗日乘子 $y_i$，得到拉格朗日函数： 

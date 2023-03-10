@@ -1,8 +1,12 @@
-# Distributionally-Robust-Optimization-Notes
+# Distributionally Robust Optimization Notes
 
-分布鲁棒优化 学习笔记
+Notes for Distributionally Robust Optimization (DRO) 分布鲁棒优化学习笔记
 
-## 目录
+Department of Industrial Engineering and Operation Management, Nanjing University
 
-[Conic-Linear-Programming 锥线性规划](Conic-Linear-Programming.md)
+This notes assume readers the basic knowlegde of linear programming, convex programming, cone and duality theory. If you have any question or comment, please create issues or contact me: prinway1226@gmail.com. Thank you.
+
+## Contents 目录
+
+[Conic Linear Programming 锥线性规划](Conic-Linear-Programming.md)
 
