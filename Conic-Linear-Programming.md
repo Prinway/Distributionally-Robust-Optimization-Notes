@@ -47,7 +47,7 @@ $$s.t \quad Ax=b$$
 
 $$x\succeq_K 0$$
 
-如果“不等号”右边不是0，也是同样的道理：在非负象限锥下，$x\geq y \Leftrightarrow x-y\geq 0  \Leftrightarrow x-y\in R_+^n$ ；在锥 $K$ 下，$x\succeq_K y \Leftrightarrow x-y\succeq_K 0  \Leftrightarrow x-y\in K$ 。
+如果“不等号”右边不是0，也是同样的道理：在非负象限锥下， $x\geq y \Leftrightarrow x-y\geq 0  \Leftrightarrow x-y\in R_+^n$ ；在锥 $K$ 下， $x\succeq_K y \Leftrightarrow x-y\succeq_K 0  \Leftrightarrow x-y\in K$ 。
 
 注意到二阶锥中出现了 $x$ 的2范数，因此二阶锥规划实际上可以处理二次问题，适用范围比线性规划更广。
 
@@ -57,7 +57,7 @@ $$x\succeq_K 0$$
 
 $$K^*=\{y:\langle x,y\rangle\geq0 \quad \forall x\in K\}$$
 
-其中 $\langle x,y\rangle$ 为 $x$ 与 $y$ 的内积。直观地看， $K^*$ 中的所有元素必须满足与 $K$ 中的所有元素的夹角不超过90°。显然，对于 $R_+^n$ ，其对偶锥就是它自己，这种对偶锥就是自己的锥叫做自对偶锥（self-dual cone）。非负象限锥、二阶锥、半正定锥都是对偶锥，所以它们在锥规划中发挥了重要作用。
+其中 $\langle x,y\rangle$ 为 $x$ 与 $y$ 的内积。直观地看， $K^*$ 中的所有元素必须满足与 $K$ 中的所有元素的夹角不超过90°。显然，对于 $R_+^n$ ，其对偶锥就是它自己，这种对偶锥就是自己的锥叫做自对偶锥（self-dual cone）。除了非负象限锥之外，可以证明二阶锥、半正定锥都是对偶锥，所以它们在锥规划中发挥了重要作用。
 
 ## 锥线性规划的对偶问题
 
@@ -70,3 +70,26 @@ $$s.t \quad \langle a_i,x\rangle =b_i,\quad i=1,2,...,m$$
 $$x\succeq_K 0$$
 
 对等式约束引入拉格朗日乘子 $y_i$，得到拉格朗日函数： 
+
+$$L(x,y)=\langle c,x\rangle -\sum_{i=1}^{m}y_i a_i x+\sum_{i=1}^{m}b_i y_i \\ = \sum_{i=1}^{m}b_i y_i+\langle c-\sum_{i=1}^{m}y_i a_i,x\rangle$$
+
+设锥 $K$ 的对偶锥为 $K^*$ ，考虑 $\min_{x\in k} L(x,y)$ ，则当 $c-\sum_{i=1}^{m}y_i a_i\in K^*$ 时， $\min \langle c-\sum_{i=1}^{m}y_i a_i,x\rangle=0$ ，否则 $\min \langle c-\sum_{i=1}^{m}y_i a_i,x\rangle=-\infty$ 。因此，原问题的对偶问题为：
+
+$$\max_y \quad \sum_{i=1}^{m}b_i y_i$$
+
+$$s.t \quad c-\sum_{i=1}^{m}y_i a_i\in K^*$$
+
+可以看出，锥线性规划对偶问题的推导也与线性规划对偶问题的推导十分相似。
+
+
+
+
+
+
+
+
+
+
+
+
+
