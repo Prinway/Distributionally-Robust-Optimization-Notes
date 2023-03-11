@@ -71,7 +71,7 @@ $$x\succeq_K 0$$
 
 对等式约束引入拉格朗日乘子 $y_i$，得到拉格朗日函数： 
 
-$$L(x,y)=\langle c,x\rangle -\sum_{i=1}^{m}y_i a_i x+\sum_{i=1}^{m}b_i y_i \\ = \sum_{i=1}^{m}b_i y_i+\langle c-\sum_{i=1}^{m}y_i a_i,x\rangle$$
+$$L(x,y)=\langle c,x\rangle -\sum_{i=1}^{m}y_i(\langle a_i,x\rangle-b_i) \\ = \sum_{i=1}^{m}b_i y_i+\langle c-\sum_{i=1}^{m}y_i a_i,x\rangle$$
 
 设锥 $K$ 的对偶锥为 $K^*$ ，考虑 $\min_{x\in k} L(x,y)$ ，则当 $c-\sum_{i=1}^{m}y_i a_i\in K^*$ 时， $\min \langle c-\sum_{i=1}^{m}y_i a_i,x\rangle=0$ ，否则 $\min \langle c-\sum_{i=1}^{m}y_i a_i,x\rangle=-\infty$ 。因此，原问题的对偶问题为：
 
@@ -80,6 +80,16 @@ $$\max_y \quad \sum_{i=1}^{m}b_i y_i$$
 $$s.t \quad c-\sum_{i=1}^{m}y_i a_i\in K^*$$
 
 可以看出，锥线性规划对偶问题的推导也与线性规划对偶问题的推导十分相似。
+
+## 强对偶性的成立条件
+
+若原问题或对偶问题有界且存在严格可行解，则强对偶性成立。严格可行解指：对于原问题的可行解 $\bar{x}$ 或对偶问题的可行解 $\bar{y}$ ， $\exists \bar{x} \quad s.t \quad \bar{x}\in int(K)$ （原问题）或 $\exists \bar{y} \quad s.t \quad c-\sum_{i=1}^{m}\bar{y_i} a_i\in int(K^*)$ （对偶问题），其中 $int(K)$ 表示在锥 $K$ 的内部。
+
+## 应用
+
+回顾鲁棒线性约束：
+
+其实，它就是一个二阶锥约束！我们费劲心思把一个优化写成线性规划、二阶锥规划或半正定规划问题，是因为它们都是比较“标准”的凸优化问题，求解方法非常成熟。
 
 
 
