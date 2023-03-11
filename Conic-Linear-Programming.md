@@ -75,7 +75,9 @@ $$x\succeq_K 0$$
 
 $$L(x,y)=\langle c,x\rangle -\sum_{i=1}^{m}y_i(\langle a_i,x\rangle-b_i) \\ = \sum_{i=1}^{m}b_i y_i+\langle c-\sum_{i=1}^{m}y_i a_i,x\rangle$$
 
-设锥 $K$ 的对偶锥为 $K^{*}$ ，考虑 $\min_{x\in k} L(x,y)$ ，则当 $c-\sum y_i a_i\in K^{*}$ 时， $\min \langle c-\sum y_i a_i,x\rangle=0$ ，否则 $\min \langle c-\sum y_i a_i,x\rangle=-\infty$ 。因此，原问题的对偶问题为：
+考虑 $\min_{x\in k} L(x,y)$ ，仅当 $c-\sum y_i a_i\in K^*$ 时， $\min \langle c-\sum y_i a_i,x\rangle=0$ ，否则 $\min \langle c-\sum y_i a_i,x\rangle=-\infty$ 。
+
+因此，原问题的对偶问题为：
 
 $$\max_y \quad \sum_{i=1}^{m}b_i y_i$$
 
