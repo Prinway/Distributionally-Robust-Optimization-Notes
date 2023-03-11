@@ -1,5 +1,7 @@
 # Conic Linear Programming 锥线性规划
 
+本部分看似和分布鲁棒优化没什么关系，但值得优先学习，原因将在最后揭晓。
+
 ## 二阶锥
 
 二阶锥（second-order cone，又称ice-cream/Lorentz cone）的形式为：
@@ -73,7 +75,7 @@ $$x\succeq_K 0$$
 
 $$L(x,y)=\langle c,x\rangle -\sum_{i=1}^{m}y_i(\langle a_i,x\rangle-b_i) \\ = \sum_{i=1}^{m}b_i y_i+\langle c-\sum_{i=1}^{m}y_i a_i,x\rangle$$
 
-设锥 $K$ 的对偶锥为 $K^*$ ，考虑 $\min_{x\in k} L(x,y)$ ，则当 $c-\sum_{i=1}^{m}y_i a_i\in K^*$ 时， $\min \langle c-\sum_{i=1}^{m}y_i a_i,x\rangle=0$ ，否则 $\min \langle c-\sum_{i=1}^{m}y_i a_i,x\rangle=-\infty$ 。因此，原问题的对偶问题为：
+设锥 $K$ 的对偶锥为 $K^{*}$ ，考虑 $\min_{x\in k} L(x,y)$ ，则当 $c-\sum y_i a_i\in K^{*}$ 时， $\min \langle c-\sum y_i a_i,x\rangle=0$ ，否则 $\min \langle c-\sum y_i a_i,x\rangle=-\infty$ 。因此，原问题的对偶问题为：
 
 $$\max_y \quad \sum_{i=1}^{m}b_i y_i$$
 
@@ -83,17 +85,25 @@ $$s.t \quad c-\sum_{i=1}^{m}y_i a_i\in K^*$$
 
 ## 强对偶性的成立条件
 
-若原问题或对偶问题有界且存在严格可行解，则强对偶性成立。严格可行解指：对于原问题的可行解 $\bar{x}$ 或对偶问题的可行解 $\bar{y}$ ， $\exists \bar{x} \quad s.t \quad \bar{x}\in int(K)$ （原问题）或 $\exists \bar{y} \quad s.t \quad c-\sum_{i=1}^{m}\bar{y_i} a_i\in int(K^*)$ （对偶问题），其中 $int(K)$ 表示在锥 $K$ 的内部。
+若原问题或对偶问题有界且存在严格可行解，则强对偶性成立。
+
+（与线性规划强对偶性的成立条件相比，多了一个“严格可行”）
+
+严格可行解指：对于原问题的可行解 $\bar{x}$ 或对偶问题的可行解 $\bar{y}$ ， $\exists \bar{x} \quad s.t \quad \bar{x}\in int(K)$ （原问题）或 $\exists \bar{y} \quad s.t \quad c-\sum\bar{y_i} a_i\in int(K^*)$ （对偶问题），其中 $int(K)$ 表示在锥 $K$ 的内部。
+
+须注意：在锥线性规划中，若的原问题有界且存在严格可行解，则对偶问题有最优解；若对偶问题有界且存在严格可行解，则原问题有最优解。而在线性规划中，只要原问题或对偶问题有界且存在可行解，则原问题和对偶问题都有最优解。
 
 ## 应用
 
 回顾鲁棒线性约束：
 
-其实，它就是一个二阶锥约束！我们费劲心思把一个优化写成线性规划、二阶锥规划或半正定规划问题，是因为它们都是比较“标准”的凸优化问题，求解方法非常成熟。
+$$a^Tx \leq b \quad \forall (a,b)=(a_0,b_0)+\sum_{j=1}^{l} \xi_j(a_j,b_j), \quad \xi \in \mathcal{U}\subseteq R^l$$
 
+当不确定集 $\mathcal{U}=\{y:\Vert y \Vert_2 \leq1\}$ 时，上述约束等价于：
 
+$$\Vert [(a_j)^Tx-b_j]_j\Vert_2 \leq b_0-(a_0)^Tx$$
 
-
+其实，它就是一个二阶锥约束！这也就是要在进一步学习分布鲁棒优化之前先学习锥线性规划的原因。我们费劲心思把一个优化写成线性规划、二阶锥规划或半正定规划问题，是因为它们都是比较“标准”的凸优化问题，求解方法非常成熟。
 
 
 
