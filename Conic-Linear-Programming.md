@@ -19,7 +19,7 @@ $Q$ 的上标表示了它的维度。因 $t$ 为1维， $x$ 为 $n$ 维向量，
 ## 半正定锥
 
 设 $S^n$ 为 $n\times n$ 的对称矩阵，则半正定锥（semidefinite cone）的形式为：
-$$S_+^n=\{Y\in S^n:u^TYu\geq 0\quad \forall u\in \mathbb{R}^n \}$$ 
+$$S_+^n=\{Y\in S^n:u^TYu\geq 0\quad \forall u\in R^n \}$$ 
 即：包含所有的 $n$ 阶对称半正定矩阵。
 
 ## 锥线性规划与线性规划的关系
