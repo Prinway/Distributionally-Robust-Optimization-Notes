@@ -40,29 +40,57 @@ $$\quad \quad \mathbb{P}(x)\geq 0.$$
 
 其中 $\mathbb{I}_{\{A\}}$ 是指示函数，当事件A发生是取值为1，否则为0； $\mathbb{P}(x)$ 是决策变量。这个DRCC是关于 $\mathbb{P}(x)$ 的线性规划问题，前3个约束条件又可以合并写成：
 
-$$\quad \quad \int_{R^n}\begin{bmatrix}x \\ 1\end{bmatrix}\begin{bmatrix}x \\ 1\end{bmatrix}^Td\mathbb{P}(x)=\begin{bmatrix}\Gamma+\bar{x}\bar{x}^T & \bar{x} \\ \bar{x}^T& 1\end{bmatrix}=\Sigma\in S_{++}^{n+1}$$
+<!-- $$
+\quad \quad \int_{R^n}\begin{bmatrix}x \\ 1\end{bmatrix}\begin{bmatrix}x \\ 1\end{bmatrix}^Td\mathbb{P}(x)=\begin{bmatrix}\Gamma+\bar{x}\bar{x}^T & \bar{x} \\ \bar{x}^T& 1\end{bmatrix}=\Sigma\in S_{++}^{n+1}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\qaEnGo2z0S.svg"></div>
 
 ## 分布鲁棒机会约束的对偶问题
 
 此时，这个DRCC依然难以求解。遇事不决，写对偶！对矩阵 $\Sigma$ 引入拉格朗日乘子 $M\in S^{n+1}$ ，考虑DRCC的拉格朗日函数：
 
-$$L(\mathbb{P},M)=\int_{R^n} \mathbb{I}_{\{r\leq-w^Tx\}}(x)d\mathbb{P}(x)+\langle M,\Sigma-\int_{R^n}\begin{bmatrix}x \\ 1\end{bmatrix}\begin{bmatrix}x \\ 1\end{bmatrix}^Td\mathbb{P}(x) \rangle$$
+<!-- $$
+L(\mathbb{P},M)=\int_{R^n} \mathbb{I}_{\{r\leq-w^Tx\}}(x)d\mathbb{P}(x)+\langle M,\Sigma-\int_{R^n}\begin{bmatrix}x \\ 1\end{bmatrix}\begin{bmatrix}x \\ 1\end{bmatrix}^Td\mathbb{P}(x) \rangle
+$$ --> 
 
-$$\sup_{\mathbb{P}\geq 0} L(\mathbb{P},M)=\langle M,\Sigma \rangle+\sup_{\mathbb{P}\geq0}\int_{R^n} [\mathbb{I}_{\{r\leq-w^Tx\}}(x)-\begin{bmatrix}x \\ 1\end{bmatrix}^TM\begin{bmatrix}x \\ 1\end{bmatrix}]d\mathbb{P}(x)$$
+<div align="center"><img style="background: white;" src="svg\dSCWgn65FL.svg"></div>
+
+<!-- $$
+\sup_{\mathbb{P}\geq 0} L(\mathbb{P},M)=\langle M,\Sigma \rangle+\sup_{\mathbb{P}\geq0}\int_{R^n} [\mathbb{I}_{\{r\leq-w^Tx\}}(x)-\begin{bmatrix}x \\ 1\end{bmatrix}^TM\begin{bmatrix}x \\ 1\end{bmatrix}]d\mathbb{P}(x)
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\Y5INpBlCUt.svg"></div>
 
 $$=\quad\sup_{\mathbb{P}\geq 0}\langle M,\Sigma \rangle$$
 
-$$s.t\quad\mathbb{I}_{\{r\leq-w^Tx\}}(x)\leq \begin{bmatrix}x \\ 1\end{bmatrix}^TM\begin{bmatrix}x \\ 1\end{bmatrix} \quad \forall x$$
+<!-- $$
+s.t\quad\mathbb{I}_{\{r\leq-w^Tx\}}(x)\leq \begin{bmatrix}x \\ 1\end{bmatrix}^TM\begin{bmatrix}x \\ 1\end{bmatrix} \quad \forall x
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\erum1kZq9z.svg"></div>
 
 由于 $\forall x$ 的存在，此问题仍然包含了无穷多个约束。进一步地，对指示函数进行拆解，可得到以下两个条件：
 
-$$\begin{bmatrix}x \\ 1\end{bmatrix}^TM\begin{bmatrix}x \\ 1\end{bmatrix} \geq 0 \quad \forall x$$
+<!-- $$
+\begin{bmatrix}x \\ 1\end{bmatrix}^TM\begin{bmatrix}x \\ 1\end{bmatrix} \geq 0 \quad \forall x
+$$ --> 
 
-$$\begin{bmatrix}x \\ 1\end{bmatrix}^TM\begin{bmatrix}x \\ 1\end{bmatrix} \geq 1 \quad \forall x:r\leq-w^Tx$$
+<div align="center"><img style="background: white;" src="svg\WzeN9sG9se.svg"></div>
+
+<!-- $$
+\begin{bmatrix}x \\ 1\end{bmatrix}^TM\begin{bmatrix}x \\ 1\end{bmatrix} \geq 1 \quad \forall x:r\leq-w^Tx
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\7BWRkO8NIH.svg"></div>
 
 第一个条件直接等价于 $M \in S_+^{n+1}$ 。第二个条件可以等价地写作：
 
-$$1 \leq \inf \begin{bmatrix}x \\ 1\end{bmatrix}^TM\begin{bmatrix}x \\ 1\end{bmatrix}$$
+<!-- $$
+1 \leq \inf \begin{bmatrix}x \\ 1\end{bmatrix}^TM\begin{bmatrix}x \\ 1\end{bmatrix}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\7OQeAhkzsI.svg"></div>
 
 $$\quad s.t \quad r+w^Tx \leq 0$$
 
@@ -70,13 +98,21 @@ $$\quad s.t \quad r+w^Tx \leq 0$$
 
 $$\exists \tau \geq 0$$
 
-$$s.t \quad \begin{bmatrix}x \\ 1\end{bmatrix}^TM\begin{bmatrix}x \\ 1\end{bmatrix}+\tau(r+w^Tx) \geq 1 \quad \forall x \in R^n$$
+<!-- $$
+s.t \quad \begin{bmatrix}x \\ 1\end{bmatrix}^TM\begin{bmatrix}x \\ 1\end{bmatrix}+\tau(r+w^Tx) \geq 1 \quad \forall x \in R^n
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\TUJ2jFXhn5.svg"></div>
 
 即：
 
 $$\exists \tau \geq 0$$
 
-$$s.t \quad \begin{bmatrix}x \\ 1\end{bmatrix}^T(M+\begin{bmatrix}0 & \frac{1}{2} \tau w \\ \frac{1}{2} \tau w ^T & \tau r-1\end{bmatrix})\begin{bmatrix}x \\ 1\end{bmatrix} \geq 0 \quad \forall x \in R^n$$
+<!-- $$
+s.t \quad \begin{bmatrix}x \\ 1\end{bmatrix}^T(M+\begin{bmatrix}0 & \frac{1}{2} \tau w \\ \frac{1}{2} \tau w ^T & \tau r-1\end{bmatrix})\begin{bmatrix}x \\ 1\end{bmatrix} \geq 0 \quad \forall x \in R^n
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\H1BzPJuMVW.svg"></div>
 
 所以，DRCC的对偶问题为：
 
@@ -84,7 +120,11 @@ $$\inf_{M\in S^{n+1}} \sup_{\mathbb{P}\geq 0} L(\mathbb{P},M)$$
 
 $$=\inf\langle M,\Sigma \rangle$$
 
-$$s.t \quad M+\begin{bmatrix}0 & \frac{1}{2} \tau w \\ \frac{1}{2} \tau w ^T & \tau r-1\end{bmatrix} \in S_+^{n+1}$$
+<!-- $$
+s.t \quad M+\begin{bmatrix}0 & \frac{1}{2} \tau w \\ \frac{1}{2} \tau w ^T & \tau r-1\end{bmatrix} \in S_+^{n+1}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\EK4vhNjHCE.svg"></div>
 
 $$\quad \quad M\in S_+^{n+1}$$
 
