@@ -109,10 +109,10 @@ $$ -->
 $$\exists \tau \geq 0$$
 
 <!-- $$
-s.t \quad \begin{bmatrix}x \\ 1\end{bmatrix}^T(M+\begin{bmatrix}0 & \frac{1}{2} \tau w \\ \frac{1}{2} \tau w ^T & \tau r-1\end{bmatrix})\begin{bmatrix}x \\ 1\end{bmatrix} \geq 0 \quad \forall x \in R^n
+s.t \quad \begin{bmatrix}x \\ 1\end{bmatrix}^T(M+\begin{bmatrix}0 & -\frac{1}{2} \tau w \\ -\frac{1}{2} \tau w ^T & 1-\tau r\end{bmatrix})\begin{bmatrix}x \\ 1\end{bmatrix} \geq 0 \quad \forall x \in R^n
 $$ --> 
 
-<div align="center"><img style="background: white;" src="svg\H1BzPJuMVW.svg"></div>
+<div align="center"><img style="background: white;" src="svg\v4Rp2UNEd3.svg"></div>
 
 所以，DRCC的对偶问题为：
 
@@ -130,11 +130,18 @@ $$\quad \quad M\in S_+^{n+1}$$
 
 $$\quad \quad \tau \geq 0$$
 
+这个问题是一个半正定锥规划问题。另外可以证明，对于DRCC问题，强对偶性成立。至此，DR-VaR问题已经容易求解。
+
 ## 引入统计量的估计
+
+前面的模糊集依赖于均值和方差的真实值，但实际上，很多时候我们只能对这些统计量进行估计。
 
 ## 分布鲁棒线性规划
 
 ## 分布鲁棒线性规划的对偶问题
+
+## 参考文献
+
 
 
 
