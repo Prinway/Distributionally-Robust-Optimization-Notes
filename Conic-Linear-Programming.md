@@ -20,34 +20,46 @@ $Q$ 的上标表示了它的维度。因 $t$ 为1维， $x$ 为 $n$ 维向量，
 
 设 $S^n$ 为 $n\times n$ 的对称矩阵，则半正定锥（semidefinite cone）的形式为：
 $$S_+^n=\{Y\in S^n:u^TYu\geq 0\quad \forall u\in R^n \}$$ 
+
 即：包含所有的 $n$ 阶对称半正定矩阵。
 
 ## 锥线性规划与线性规划的关系
 
 为什么说锥线性规划是线性规划的拓展呢？回顾线性规划标准型：
-$$\min \quad c^Tx$$
 
-$$s.t \quad Ax=b$$
+<!-- $$
+\begin{array}{ll}
+\min & c^Tx \\
+s.t & Ax=b \\
+& x\geq 0
+\end{array}
+$$ --> 
 
-$$x\geq 0$$
-
-（Github似乎不支持```align```语法，导致这些多行公式都无法对齐，不够优雅）
+<div align="center"><img style="background: white;" src="svg\DhU4Sos41X.svg"></div>
 
 从锥规划的角度看， $x\geq0$ 实际上就是 $x\in R_+^n$ ！当我们把此处的非负象限锥 $R_+^n$ 改为二阶锥或者半正定锥，自然就从线性规划推广出了锥线性规划。假设我们把 $R_+^n$ 改成锥 $K$ ，那么锥规划写作：
 
-$$\min \quad c^Tx$$
+<!-- $$
+\begin{array}{ll}
+\min & c^Tx \\
+s.t & Ax=b \\
+& x\in K
+\end{array}
+$$ --> 
 
-$$s.t \quad Ax=b$$
-
-$$x\in K$$
+<div align="center"><img style="background: white;" src="svg\pfvxytoqIv.svg"></div>
 
 为了看起来跟线性规划更像，我们把不等号也进行推广，定义： $x\succeq_K 0 \Leftrightarrow x\in K$，就得到了锥规划的“标准型”：
 
-$$\min \quad c^Tx$$
+<!-- $$
+\begin{array}{ll}
+\min & c^Tx \\
+s.t & Ax=b \\
+& x\succeq_K 0
+\end{array}
+$$ --> 
 
-$$s.t \quad Ax=b$$
-
-$$x\succeq_K 0$$
+<div align="center"><img style="background: white;" src="svg\UZ0AS2zRMF.svg"></div>
 
 如果“不等号”右边不是0，也是同样的道理：在非负象限锥下， $x\geq y \Leftrightarrow x-y\geq 0  \Leftrightarrow x-y\in R_+^n$ ；在锥 $K$ 下， $x\succeq_K y \Leftrightarrow x-y\succeq_K 0  \Leftrightarrow x-y\in K$ 。
 
@@ -65,23 +77,50 @@ $$K^*=\{y:\langle x,y\rangle\geq0 \quad \forall x\in K\}$$
 
 为了更加具有一般性，以后目标函数就用内积的形式写了。考虑原问题：
 
-$$\min \quad \langle c,x\rangle$$
+<!-- $$
+\begin{array}{ll}
+\min & \langle c,x\rangle \\
+s.t & \langle a_i,x\rangle =b_i,\quad i=1,2,...,m \\
+& x\succeq_K 0
+\end{array}
+$$ --> 
 
-$$s.t \quad \langle a_i,x\rangle =b_i,\quad i=1,2,...,m$$
-
-$$x\succeq_K 0$$
+<div align="center"><img style="background: white;" src="svg\1c3v7clYOM.svg"></div>
 
 对等式约束引入拉格朗日乘子 $y_i$，得到拉格朗日函数： 
 
-$$L(x,y)=\langle c,x\rangle -\sum_{i=1}^{m}y_i(\langle a_i,x\rangle-b_i) \\ = \sum_{i=1}^{m}b_i y_i+\langle c-\sum_{i=1}^{m}y_i a_i,x\rangle$$
+<!-- $$
+\begin{array}{ll}
+L(x,y) & =\langle c,x\rangle -\sum_{i=1}^{m}y_i(\langle a_i,x\rangle-b_i) \\ & = \sum_{i=1}^{m}b_i y_i+\langle c-\sum_{i=1}^{m}y_i a_i,x\rangle
+\end{array}
+$$ --> 
 
-考虑 $\min_{x\in k} L(x,y)$ ，仅当 $c-\sum y_i a_i\in K^*$ 时， $\min \langle c-\sum y_i a_i,x\rangle=0$ ，否则 $\min \langle c-\sum y_i a_i,x\rangle=-\infty$ 。
+<div align="center"><img style="background: white;" src="svg\651B5oAlEo.svg"></div>
+
+<!-- 考虑 $\min_{x\in k} L(x,y)$ ，仅当 $c-\sum y_i a_i\in K^*$ 时， $\min \langle c-\sum y_i a_i,x\rangle=0$ ，否则 $\min \langle c-\sum y_i a_i,x\rangle=-\infty$ 。 -->
+
+其中：
+
+<!-- $$
+\min \langle c-\sum y_i a_i,x\rangle=
+\begin{cases}
+0 , \quad if \quad c-\sum y_i a_i\in K^* \\
+-\infty , \quad otherwise
+\end{cases}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\Dnfk885rcI.svg"></div>
 
 因此，原问题的对偶问题为：
 
-$$\max_y \quad \sum_{i=1}^{m}b_i y_i$$
+<!-- $$
+\begin{array}{ll}
+\max_y & \sum_{i=1}^{m}b_i y_i \\
+s.t & c-\sum_{i=1}^{m}y_i a_i\in K^*
+\end{array}
+$$ --> 
 
-$$s.t \quad c-\sum_{i=1}^{m}y_i a_i\in K^*$$
+<div align="center"><img style="background: white;" src="svg\KsMrU7gGof.svg"></div>
 
 可以看出，锥线性规划对偶问题的推导也与线性规划对偶问题的推导十分相似。
 
@@ -106,12 +145,3 @@ $$a^Tx \leq b \quad \forall (a,b)=(a_0,b_0)+\sum_{j=1}^{l} \xi_j(a_j,b_j), \quad
 $$\Vert [(a_j)^Tx-b_j]_j\Vert_2 \leq b_0-(a_0)^Tx$$
 
 其实，它就是一个二阶锥约束！这也就是要在进一步学习分布鲁棒优化之前先学习锥线性规划的原因。我们费劲心思把一个优化写成线性规划、二阶锥规划或半正定规划问题，是因为它们都是比较“标准”的凸优化问题，求解方法非常成熟。
-
-
-
-
-
-
-
-
-
