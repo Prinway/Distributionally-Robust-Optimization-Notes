@@ -33,8 +33,8 @@ $$ -->
 
 <!-- $$
 \begin{array}{ll}
-\sup_{\mathbb{P} \in \mathcal{P}} & P_{\mathbb{P}}(r\leq-w^Tx) = \\
-\sup & \int_{R^n} \mathbb{I}_{\{r\leq-w^Tx\}}(x)d\mathbb{P}(x) \\
+& \sup_{\mathbb{P} \in \mathcal{P}} \quad P_{\mathbb{P}}(r\leq-w^Tx) \\
+= & \sup \quad \int_{R^n} \mathbb{I}_{\{r\leq-w^Tx\}}(x)d\mathbb{P}(x) \\
 s.t & \int_{R^n}d\mathbb{P}(x)=1, \\
 & \int_{R^n}xd\mathbb{P}(x)=\mu,\\
 & \int_{R^n}(x-\mu)(x-\mu)^Td\mathbb{P}(x)=\Gamma, \\
@@ -42,7 +42,7 @@ s.t & \int_{R^n}d\mathbb{P}(x)=1, \\
 \end{array}
 $$ --> 
 
-<div align="center"><img style="background: white;" src="svg\ThJQIjQd1F.svg"></div>
+<div align="center"><img style="background: white;" src="svg\h0GiDlAjdh.svg"></div>
 
 其中 $\mathbb{I}_{\{A\}}$ 是指示函数，当事件A发生是取值为1，否则为0； $\mathbb{P}(x)$ 是决策变量。这个DRCC是关于 $\mathbb{P}(x)$ 的线性规划问题，前3个约束条件又可以合并写成：
 
@@ -121,21 +121,21 @@ $$ -->
 
 <!-- $$
 \begin{array}{ll}
-& \inf_{M\in S^{n+1}} \sup_{\mathbb{P}\geq 0}  L(\mathbb{P},M) \\
-= & \inf\langle M,\Sigma \rangle \\
+& \inf_{M\in S^{n+1}} \sup_{\mathbb{P}\geq 0} \quad L(\mathbb{P},M) \\
+= & \inf \quad \langle M,\Sigma \rangle \\
 & s.t \quad M+\begin{bmatrix}0 & \frac{1}{2} \tau w \\ \frac{1}{2} \tau w ^T & \tau r-1\end{bmatrix} \in S_+^{n+1} \\
 & \quad \quad M\in S_+^{n+1} \\
 & \quad \quad \tau \geq 0 \\
 \end{array}
 $$ --> 
 
-<div align="center"><img style="background: white;" src="svg\wgvuYjHBh3.svg"></div>
+<div align="center"><img style="background: white;" src="svg\eVuJteLQfs.svg"></div>
 
 这个问题是一个半正定锥规划问题。另外可以证明，对于DRCC问题，强对偶性成立。至此，DR-VaR问题已经容易求解。
 
 ## 引入统计量的估计
 
-前面的模糊集依赖于均值和方差的真实值，但实际上，很多时候我们只能对这些统计量进行估计。如果我们有随机变量的 $N$ 个样本 $\xi_i$ ，就可以引入均值和方差的估计量：
+前面的模糊集依赖于均值和方差的真实值，但实际上，很多时候我们只能对这些统计量进行估计。如果我们有随机变量的 $N$ 个独立同分布的样本 $\xi_i$ ，就可以引入均值和方差的估计量：
 
 $$\hat{\mu}=\frac{1}{N} \sum_{i=1}^{N} \xi_i$$
 
@@ -151,14 +151,14 @@ $$\mathbb{E}_{\mathbb{P}} [(\xi_i-\hat{\mu})(\xi_i-\hat{\mu})^T] \preceq \gamma_
 
 不过，此时 $\mathbb{E}_{\mathbb{P}} [(\xi_i-\hat{\mu})(\xi_i-\hat{\mu})^T]$ 并不是方差的真实值，因为我们使用了 $\hat{\mu}$ 而不是 $\mu$ 。
 
-考虑满足以上条件的分布 $\mathbb{P}$，我们可以构建模糊集：
+在支撑集 $C\in R^n$ 上考虑满足以上条件的分布 $\mathbb{P}$，我们可以构建模糊集：
 
 <!-- $$
-\mathcal{P}=\mathcal{P}(\hat{\mu},\hat{\Gamma},\gamma_1,\gamma_2)=
+\mathcal{P}=\mathcal{P}(C,\hat{\mu},\hat{\Gamma},\gamma_1,\gamma_2)=
 \left\{\begin{array}{ll}
 \mathbb{P}\geq0 : & 
 \begin{array}{l}
-\mathcal{P}(R^n)=1,  \\
+\mathbb{P}(C)=1,  \\
 (\mathbb{E}_{\mathbb{P}}[\xi]-\hat{\mu})^T\hat{\Gamma}^{-1}(\mathbb{E}_{\mathbb{P}}[\xi]-\hat{\mu})\leq \gamma_1,  \\
 \mathbb{E}_{\mathbb{P}} [(\xi_i-\hat{\mu})(\xi_i-\hat{\mu})^T] \preceq \gamma_2 \hat{\Gamma}.
 \end{array}
@@ -166,9 +166,54 @@ $$\mathbb{E}_{\mathbb{P}} [(\xi_i-\hat{\mu})(\xi_i-\hat{\mu})^T] \preceq \gamma_
 \right\}
 $$ --> 
 
-<div align="center"><img style="background: white;" src="svg\wX5iy4t61x.svg"></div>
+<div align="center"><img style="background: white;" src="svg\8jcLjAmjfo.svg"></div>
 
 ## 分布鲁棒线性规划
+
+考虑以下分布鲁棒线性规划问题：
+
+$$\inf_{x\in \mathcal{U}} \sup_{\mathbb{P}\in \mathcal{P}} \quad \mathbb{E}_{\mathbb{P}}[h(x,\xi)]$$
+
+其中 $h: R^m \times R^n \rightarrow R$ 是一个带有不确定性的成本函数， $x$ 为决策变量， $\xi$ 为扰动向量。
+
+首先，我们从内层的最大化问题出发：
+
+<!-- $$
+\begin{array}{ll}
+& \sup_{\mathbb{P}\in \mathcal{P}} \quad \mathbb{E}_{\mathbb{P}}[h(x,\xi)] \\
+= & \sup \quad \int_{C} h(x,\xi) d\mathbb{P}(\xi) \\
+s.t & \int_{C}d\mathbb{P}(\xi)=1, \\
+& \int_{C}(\xi_i-\hat{\mu})(\xi_i-\hat{\mu})^Td\mathbb{P}(\xi) \preceq \gamma_2 \hat{\Gamma},\\
+& \int_{C} \begin{bmatrix} \hat{\Gamma} & \xi-\hat{\mu} \\ (\xi-\hat{\mu})^T & \gamma_1\end{bmatrix} d\mathbb{P}(\xi) \succeq 0,\\
+& \mathbb{P}\geq 0. \\
+= & \sup \quad \int_{C} h(x,\xi) d\mathbb{P}(\xi) \\
+s.t & \int_{C}d\mathbb{P}(\xi)=1, \\
+& \int_{C}(\xi\xi^T-\xi\hat{\mu}^T-\hat{\mu}\xi^T)d\mathbb{P}(\xi) \preceq \gamma_2 \hat{\Gamma}-\hat{\mu}\hat{\mu}^T,\\
+& \begin{bmatrix} \hat{\Gamma} & \int_C\xi d\mathbb{P}(\xi) -\hat{\mu} \\ \int_C\xi^T d\mathbb{P}(\xi) -\hat{\mu}^T & \gamma_1\end{bmatrix} \succeq 0,\\
+& \mathbb{P}\geq 0. \\
+\end{array}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\nFQ8CK01qX.svg"></div>
+
+同样地，写对偶。对三个约束条件分别引入拉格朗日乘子 $r\in R$ 、 $Q \succeq 0$ 和 $M \succeq 0$ ，其中：
+
+<!-- $$
+M=\begin{bmatrix} P & p \\ p^T & s\end{bmatrix}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\NsYRGiu90E.svg"></div>
+
+于是，可以写出内层问题的拉格朗日函数：
+
+<!-- $$
+\begin{array}{ll}
+& L(\mathbb{P},r,Q,P,p,s) \\
+= & \int_{C} h(x,\xi) d\mathbb{P}(\xi)+r(1-\int_{C}d\mathbb{P}(\xi)) \\ - & \langle Q,\int_{C}(\xi\xi^T-\xi\hat{\mu}^T-\hat{\mu}\xi^T)d\mathbb{P}(\xi) - \gamma_2 \hat{\Gamma}+\hat{\mu}\hat{\mu}^T \rangle \\ + & \langle P,\hat{\Gamma}\rangle + 2p^T(\int_C\xi d\mathbb{P}(\xi) -\hat{\mu}) + s\gamma_1
+\end{array}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\tXpzXyLtdF.svg"></div>
 
 ## 分布鲁棒线性规划的对偶问题
 
