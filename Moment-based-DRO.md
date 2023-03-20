@@ -2,7 +2,7 @@
 
 ## 从投资组合优化问题开始
 
-考虑一个单周期投资组合优化问题。假设共有 $n$ 种资产， $x_i$ 为第 $i$ 种资产的回报（是随机的）， $w_i$ 为分配到第 $i$ 种资产的投资权重，则投资总汇报为 $w^Tx$ 。
+考虑一个单周期投资组合优化问题。假设共有 $n$ 种资产， $x_i$ 为第 $i$ 种资产的回报（是随机的）， $w_i$ 为分配到第 $i$ 种资产的投资权重，则投资总回报为 $w^Tx$ 。
 
 一个非常著名的衡量投资风险的度量是在险价值（Value-at-Risk，VaR），其定义为：
 
@@ -215,10 +215,41 @@ $$ -->
 
 <div align="center"><img style="background: white;" src="svg\tXpzXyLtdF.svg"></div>
 
-## 分布鲁棒线性规划的对偶问题
+内层问题的对偶问题为：
+
+<!-- $$
+\begin{array}{ll}
+& \inf_{\begin{array}{l}r \in R\\ Q \succeq 0\\M\succeq 0 \end{array}} \sup_{\mathbb{P}\geq 0} \quad L(\mathbb{P},r,Q,P,p,s) \\ 
+= &\inf \sup \quad \int_C [h(x,\xi)-r-\xi^T Q\xi+2\xi^T Q\hat{\mu}+2p^T\xi] d\mathbb{P}(\xi) \\
+& +r+\langle Q,\gamma_2 \hat{\Gamma}-\hat{\mu}\hat{\mu}^T \rangle+\langle P,\hat{\Gamma} \rangle-2p^T\hat{\mu}+s\gamma_1 \\ = & \inf \quad r+\langle Q,\gamma_2 \hat{\Gamma}-\hat{\mu}\hat{\mu}^T \rangle+\langle P,\hat{\Gamma} \rangle-2p^T\hat{\mu}+s\gamma_1 \\ s.t & h(x,\xi)-r-\xi^T Q\xi+2\xi^T Q\hat{\mu}+2p^T\xi \leq 0, \quad \forall \xi \in C \\ & r \in R\\ & Q \succeq 0\\ & M\succeq 0
+\end{array}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\nnv5zilYnt.svg"></div>
+
+此时，问题还可进一步简化。由于：
+
+<!-- $$
+M=\begin{bmatrix} P & p \\ p^T & s\end{bmatrix} \succeq 0
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\VsR5Xmo84E.svg"></div>
+
+所以，若问题存在最优解，则 $P^*=\frac{1}{s^*}p^*{p^*}^T$ 或 $s^*=0$ 。在这两种情况下，都有 $s^*=\frac{1}{\sqrt{\gamma_1}} {\sqrt{p^T \hat{\Gamma} p}}=\frac{1}{\sqrt{\gamma_1}} \Vert \hat{\Gamma}^{\frac{1}{2}}p \Vert_2$ 。再令 $q=p+Q\hat{\mu}$ ，则内层问题的对偶问题简化为：
+
+<!-- $$
+\begin{array}{ll}
+\inf & r+\gamma_2\langle \hat{\Gamma},Q \rangle+\hat{\mu}^T Q\hat{\mu} -2\hat{\mu}^Tq+2\sqrt{\gamma_1} \Vert \Gamma^{\frac{1}{2}} (q-Q\hat{\mu}) \Vert_2 \\
+s.t & h(x,\xi)-r-\xi^T Q\xi+2\xi^T q \leq 0, \quad \forall \xi \in C \\ & r \in R\\ & Q \succeq 0\\ & q \in R^n
+\end{array}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\7WCg7BNZzU.svg"></div>
+
+wow，这又是一个二阶锥规划问题！而且可以证明，强对偶性成立。
+
 
 ## 参考文献
-
 
 
 
