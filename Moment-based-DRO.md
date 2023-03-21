@@ -246,7 +246,25 @@ $$ -->
 
 <div align="center"><img style="background: white;" src="svg\7WCg7BNZzU.svg"></div>
 
-wow，这又是一个二阶锥规划问题！而且可以证明，强对偶性成立。
+wow，这又是一个二阶锥规划问题！而且可以证明，强对偶性成立。所以，分布鲁棒线性规划问题被写为：
+
+<!-- $$
+\begin{array}{ll}
+& \inf_{x\in \mathcal{U}} \sup_{\mathbb{P}\in \mathcal{P}} \quad \mathbb{E}_{\mathbb{P}}[h(x,\xi)] \\
+= & \inf \quad r+t \\
+s.t & h(x,\xi)-r-\xi^T Q\xi+2\xi^T q \leq 0, \quad \forall \xi \in C \\
+& t \geq \gamma_2\langle \hat{\Gamma},Q \rangle+\langle \hat{\mu}\hat{\mu}^T,Q\rangle -2\hat{\mu}^Tq+2\sqrt{\gamma_1} \Vert \Gamma^{\frac{1}{2}} (q-Q\hat{\mu}) \Vert_2, \\ 
+& r\in R,\quad Q \succeq 0,\quad q \in R^n,\quad x\in \mathcal{U}, \quad t\in R
+\end{array}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\d0T3RmL30A.svg"></div>
+
+此问题现在已经变为一个经典鲁棒优化问题，可以用经典鲁棒优化的算法求解。
+
+
+## 模糊集大小的选择
+
 
 
 ## 参考文献
