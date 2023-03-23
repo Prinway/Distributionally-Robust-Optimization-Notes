@@ -247,7 +247,7 @@ $$ -->
 
 <div align="center"><img style="background: white;" src="svg\VsR5Xmo84E.svg"></div>
 
-所以，若问题存在最优解，则 $P^*=\frac{1}{s^*}p^*{p^*}^T$ 或 $s^*=0$ 。在这两种情况下，都有 $s^*=\frac{1}{\sqrt{\gamma_1}} {\sqrt{p^T \hat{\Gamma} p}}=\frac{1}{\sqrt{\gamma_1}} \Vert \hat{\Gamma}^{\frac{1}{2}}p \Vert_2$ 。再令 $q=p+Q\hat{\mu}$ ，则内层问题的对偶问题简化为：
+所以，若问题存在最优解，则 $P^*=\frac{1}{s^{*}}p^{*}{p^{*}}^T$ 或 $s^{*}=0$ 。在这两种情况下，都有 $s^{*}=\frac{1}{\sqrt{\gamma_1}} {\sqrt{p^T \hat{\Gamma} p}}=\frac{1}{\sqrt{\gamma_1}} \Vert \hat{\Gamma}^{\frac{1}{2}}p \Vert_2$ 。再令 $q=p+Q\hat{\mu}$ ，则内层问题的对偶问题简化为：
 
 <!-- $$
 \begin{array}{ll}
