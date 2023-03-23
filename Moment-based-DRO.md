@@ -247,7 +247,7 @@ $$ -->
 
 <div align="center"><img style="background: white;" src="svg\VsR5Xmo84E.svg"></div>
 
-所以，若问题存在最优解，则 $P^*=\frac{1}{s^{*}}p^{*}{p^{*}}^T$ 或 $s^{*}=0$ 。在这两种情况下，都有 $s^{*}=\frac{1}{\sqrt{\gamma_1}} {\sqrt{p^T \hat{\Gamma} p}}=\frac{1}{\sqrt{\gamma_1}} \Vert \hat{\Gamma}^{\frac{1}{2}}p \Vert_2$ 。再令 $q=p+Q\hat{\mu}$ ，则内层问题的对偶问题简化为：
+所以，若问题存在最优解，则 $P=\frac{1}{s}p{p}^T$ 或 $s=0$ 。在这两种情况下，都有 $s=\frac{1}{\sqrt{\gamma_1}} {\sqrt{p^T \hat{\Gamma} p}}=\frac{1}{\sqrt{\gamma_1}} \Vert \hat{\Gamma}^{\frac{1}{2}}p \Vert_2$ 。再令 $q=p+Q\hat{\mu}$ ，则内层问题的对偶问题简化为：
 
 <!-- $$
 \begin{array}{ll}
@@ -284,7 +284,7 @@ $$\hat{\mu}=\frac{1}{N} \sum_{i=1}^{N} \xi_i$$
 
 $$\hat{\Gamma}=\frac{1}{N} \sum_{i=1}^{N} (\xi_i-\hat{\mu})(\xi_i-\hat{\mu})^T$$
 
-设 $\mu$ 和 $\Gamma$ 分别为真实分布 $\mathbb{P^*}$ 下 $\xi$ 的均值和方差。假设 $\mathbb{P^*}$ 有界，即：
+先选择 $\gamma_1$ 。设 $\mu$ 和 $\Gamma$ 分别为真实分布 $\mathbb{P^*}$ 下 $\xi$ 的均值和方差。假设真实分布的支撑集有界，即：
 
 $$\exists R\geq 0: \quad P_\mathbb{P^*}((\xi-\mu)^T\Gamma^{-1}(\xi-\mu)\leq R^2)=1$$
 
@@ -312,7 +312,7 @@ $$P_\mathbb{P^*}((\hat{\mu}-\mu)^T\Gamma^{-1}(\hat{\mu}-\mu) \leq \frac{R^2}{N}(
 
 最后需要处理的一件事情是，上式中出现的是真实方差 $\Gamma$ ，但我们在定义 $\mathcal{P}$ 时用的是经验方差 $\hat{\Gamma}$，所以需要对经验方差 $\hat{\Gamma}$ 和真实方差 $\Gamma$ 之间的距离进行限制。
 
-利用另一些集中不等式进行推导可以证明，当样本数量足够多时，在给定 $\delta$ 的情况下，可使用以下式子计算 $\gamma_1$ 和 $\gamma_2$ ：
+使用类似的思路，可以选择 $\gamma_2$ 。利用一些集中不等式进行推导可以证明，当样本数量足够多时，在给定 $\delta$ 的情况下，可使用以下式子选择 $\gamma_1$ 和 $\gamma_2$ ：
 
 $$\gamma_1=\frac{\beta}{1-\alpha-\beta}$$
 
