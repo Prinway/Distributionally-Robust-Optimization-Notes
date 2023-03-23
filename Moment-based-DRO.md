@@ -196,6 +196,18 @@ $$ -->
 
 <div align="center"><img style="background: white;" src="svg\nFQ8CK01qX.svg"></div>
 
+转化的过程中用到了舒尔补（Schur complement）：
+
+<!-- $$
+\begin{array}{ll}
+& (\mathbb{E}_{\mathbb{P}}[\xi]-\hat{\mu})^T\hat{\Gamma}^{-1}(\mathbb{E}_{\mathbb{P}}[\xi]-\hat{\mu})\leq \gamma_1 \\
+\Leftrightarrow & \begin{bmatrix} \hat{\Gamma} & \mathbb{E}_{\mathbb{P}}[\xi]-\hat{\mu} \\ (\mathbb{E}_{\mathbb{P}}[\xi]-\hat{\mu})^T & \gamma_1\end{bmatrix} \succeq 0 \\ 
+\Leftrightarrow & \mathbb{E}_{\mathbb{P}}\begin{bmatrix} \hat{\Gamma} & \xi-\hat{\mu} \\ (\xi-\hat{\mu})^T & \gamma_1\end{bmatrix} \succeq 0\\
+\end{array}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\OvjKxwqaZ3.svg"></div>
+
 同样地，写对偶。对三个约束条件分别引入拉格朗日乘子 $r\in R$ 、 $Q \succeq 0$ 和 $M \succeq 0$ ，其中：
 
 <!-- $$
@@ -260,14 +272,69 @@ $$ -->
 
 <div align="center"><img style="background: white;" src="svg\d0T3RmL30A.svg"></div>
 
-此问题现在已经变为一个经典鲁棒优化问题，可以用经典鲁棒优化的算法求解。
-
+此问题现在已经变为一个经典鲁棒优化问题，可以用经典鲁棒优化的算法求解。进一步地，在一些假设下，此问题可以在多项式时间内找到最优解。
 
 ## 模糊集大小的选择
 
+现在还剩下一个问题，模糊集的大小如何选择？模糊集越大，其包含真实分布的可能性就越高，但模型也越保守。因此，我们需要在模糊集的大小上做一些权衡。具体到上面的分布鲁棒线性规划问题，就是如何选择合适的 $\gamma_1$ 和 $\gamma_2$ 。
 
+回顾经验均值 $\hat{\mu}$ 和经验方差 $\hat{\Gamma}$ 的计算方法：
+
+$$\hat{\mu}=\frac{1}{N} \sum_{i=1}^{N} \xi_i$$
+
+$$\hat{\Gamma}=\frac{1}{N} \sum_{i=1}^{N} (\xi_i-\hat{\mu})(\xi_i-\hat{\mu})^T$$
+
+设 $\mu$ 和 $\Gamma$ 分别为真实分布 $\mathbb{P^*}$ 下 $\xi$ 的均值和方差。假设 $\mathbb{P^*}$ 有界，即：
+
+$$\exists R\geq 0: \quad P_\mathbb{P^*}((\xi-\mu)^T\Gamma^{-1}(\xi-\mu)\leq R^2)=1$$
+
+考虑以下概率：
+
+<!-- $$
+\begin{array}{ll}
+& P_\mathbb{P^*}((\hat{\mu}-\mu)^T\Gamma^{-1}(\hat{\mu}-\mu)\leq t) \\
+= & P_\mathbb{P^*}(\Vert \Gamma^{-\frac{1}{2}}(\hat{\mu}-\mu) \Vert_2^2 \leq t) \\
+= & P_\mathbb{P^*}(\Vert \Gamma^{-\frac{1}{2}}(\frac{1}{N} \sum_{i=1}^{N} \xi_i-\mu) \Vert_2^2 \leq t) \\
+= & P_\mathbb{P^*}(\Vert \frac{1}{N} \sum_{i=1}^{N} \Gamma^{-\frac{1}{2}} (\xi_i-\mu) \Vert_2^2 \leq t) \\
+= & P_\mathbb{P^*}(\Vert \frac{1}{N} \sum_{i=1}^{N} \zeta_i \Vert_2^2 \leq t) \\
+\end{array}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\bTZzN3Z8pp.svg"></div>
+
+其中， $\zeta=\Gamma^{-\frac{1}{2}} (\xi-\mu)$ 的均值为 $0$ ，方差为 $I$ 。根据 Mcdiarmid 不等式，选择 $t=\frac{R^2}{N}(2+\sqrt{2\ln\frac{1}{\delta}})^2$ 时，有：
+
+$$P_\mathbb{P^*}(\Vert \frac{1}{N} \sum_{i=1}^{N} \zeta_i \Vert_2^2 \leq \frac{R^2}{N}(2+\sqrt{2\ln\frac{1}{\delta}})^2) \geq 1-\delta$$
+
+还原为：
+
+$$P_\mathbb{P^*}((\hat{\mu}-\mu)^T\Gamma^{-1}(\hat{\mu}-\mu) \leq \frac{R^2}{N}(2+\sqrt{2\ln\frac{1}{\delta}})^2) \geq 1-\delta$$
+
+最后需要处理的一件事情是，上式中出现的是真实方差 $\Gamma$ ，但我们在定义 $\mathcal{P}$ 时用的是经验方差 $\hat{\Gamma}$，所以需要对经验方差 $\hat{\Gamma}$ 和真实方差 $\Gamma$ 之间的距离进行限制。
+
+利用另一些集中不等式进行推导可以证明，当样本数量足够多时，在给定 $\delta$ 的情况下，可使用以下式子计算 $\gamma_1$ 和 $\gamma_2$ ：
+
+$$\gamma_1=\frac{\beta}{1-\alpha-\beta}$$
+
+$$\gamma_2=\frac{1+\beta}{1-\alpha-\beta}$$
+
+其中：
+
+$$\alpha=\frac{R^2}{\sqrt{N}}(\sqrt{1-\frac{n}{R^4}}+\sqrt{2\ln\frac{4}{\delta}})$$
+
+$$\beta=\frac{R^2}{\sqrt{N}}(2+\sqrt{2\ln\frac{2}{\delta}})^2$$
+
+$n$ 为 $\xi$ 的维度。
 
 ## 参考文献
+
+- Delage, E., & Ye, Y. (2010). Distributionally Robust Optimization Under Moment Uncertainty with Application to Data-Driven Problems. Operations Research, 58(3), 595–612.
+
+- Ghaoui, L. E., Oks, M., & Oustry, F. (2003). Worst-Case Value-At-Risk and Robust Portfolio Optimization: A Conic Programming Approach. Operations Research, 51(4), 543–556.
+
+- Shapiro, A. (2001). On Duality Theory of Conic Linear Problems. In M. Á. Goberna & M. A. López (Eds.), Semi-Infinite Programming (Vol. 57, pp. 135–165). Springer US.
+
+
 
 
 
