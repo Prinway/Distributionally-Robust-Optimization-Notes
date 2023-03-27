@@ -20,15 +20,15 @@ $$W(\mathbb{P},\mathbb{Q})=\inf_{\Pi}\{\int_{\Xi \times \Xi} \mathbb{E}_{\Pi}[d(
 
 ![img](assets/symmetry_1d.png)
 
-特别地，在离散的情况下，Wasserstein 距离是把商品从一堆生产者运输到一堆需求者的最优传输距离。设 $\mathbb{P}=\sum_{i=1}^N p_i \delta_{\hat{\xi_i}}$ ， $\mathbb{Q}=\sum_{j=1}^M p_j \delta_{\hat{{\xi'}_j}}$ ，$\gamma_{ij}$ 为从 $i$ 到 $j$ 的运输计划， $c(i,j)$ 为从 $i$ 到 $j$ 的运输成本，则：
+特别地，在离散的情况下，Wasserstein 距离是把商品从一堆生产者运输到一堆需求者的最优传输距离。设 $\mathbb{P}=\sum_{i=1}^N p_i \delta_{\hat{\xi_i}}$ ， $\mathbb{Q}=\sum_{j=1}^M q_j \delta_{\hat{{\xi'}_j}}$ ，$\gamma_{ij}$ 为从 $i$ 到 $j$ 的运输计划， $c(i,j)$ 为从 $i$ 到 $j$ 的运输成本，则：
 
-$$W(\mathbb{P},\mathbb{Q})=\inf_{\gamma_{ij}>0} \{ \sum_{ij} \gamma_{ij} · c(\xi_i,{\xi'}_j): \sum_j \gamma_{ij}=p_i, \forall i, \sum_i \gamma_{ij}=q_j, \forall j \}$$
+$$W(\mathbb{P},\mathbb{Q})=\inf_{\gamma_{ij}>0} \{ \sum_{i,j} \gamma_{ij} · c(\xi_i,{\xi'}_j): \sum_j \gamma_{ij}=p_i, \forall i, \sum_i \gamma_{ij}=q_j, \forall j \}$$
 
 ![img](assets/earth_move_1.png)
 
 有了 Wasserstein 距离，我们就可以定义一个 Wasserstein 球：
 
-$$\mathbb{B}_\epsilon(\mathbb{Q}:W(\mathbb{Q},\mathbb{P}) \leq \epsilon)$$
+$$\mathbb{B}_\epsilon(\mathbb{P})= \{\mathbb{Q}:W(\mathbb{Q},\mathbb{P}) \leq \epsilon\}$$
 
 ## 分布鲁棒优化与机器学习
 
@@ -46,9 +46,84 @@ $$\hat{\beta}=\arg\min_\beta \frac{1}{N} \sum_{i=1}^N l_\beta(\xi_i)=\arg\min_\b
 
 $$\hat{\beta}=\arg \min_\beta \mathbb{E}_{\hat{P_N}}[l_\beta(\xi)]+\epsilon R(\beta)$$
 
+添加正则项之后，$\beta$ 的泛化能力在实验中确实得到了提升，但这一方法的理论解释性不强。本质上来说，我们希望 $\beta$ 在样本外数据上也表现得很好，即从经验分布 $\hat{\mathbb{P}_N}$ 出发，以某种方式将真实分布 $\mathbb{P}^*$ 也纳入考虑。恰好，以经验分布 $\hat{\mathbb{P}_N}$ 为中心的 Wasserstein 球满足了我们的想法！于是，得到以下问题：
 
+$$\inf_{\beta} \sup_{\mathbb{P}\in \mathbb{B}_\epsilon(\hat{\mathbb{P}_N})} \mathbb{E}_{\mathbb{P}}[l_\beta(\xi)]$$
 
+这又是一个分布鲁棒线性规划。
 
 ## 分布鲁棒线性规划
 
+在逻辑回归问题中，如果我们有两个不同的样本 $\xi=(x,y)$ 和 $\xi'=(x',y')$ ，则它们之间的运输成本可被定义为：
+
+$$d(\xi,\xi')=\Vert x-x' \Vert+\frac{K}{2} \vert y-y'\vert$$
+
+其中， $K$ 是自己定义的一个权重，用来调节特征和标签的不确定性。例如，当 $K=+\infty$ 时，说明不允许对同一个特征出现两种不同的标签。
+
+定义了运输成本（即定义了 Wasserstein 球之后），就可以完整地写出刚才那个分布鲁棒线性规划问题：
+
+$$\inf_{\beta \in R^n} \sup_{\mathbb{Q}\in \mathbb{B}_\epsilon(\hat{\mathbb{P}_N})} \mathbb{E}_{(x,y) \sim \mathbb{Q}}[l_\beta(x,y)]$$
+
+其中：
+
+<!-- $$
+\begin{array}{rl}
+l_\beta(x,y)=&\log (1+e^{-y·\beta^Tx}) \\
+\mathbb{B}_\epsilon(\hat{\mathbb{P}_N})=&\{\mathbb{Q}:W(\mathbb{Q},\hat{\mathbb{P}_N}) \leq \epsilon\} \\
+\hat{\mathbb{P}_N}(\xi)=&\frac{1}{N}\sum_{i=1}^N \delta_{(\hat{x_i},\hat{y_i})}(\xi)
+\end{array}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\Zk87cPQYBz.svg"></div> 
+
+$$W(\mathbb{P},\mathbb{Q})=\inf_{\Pi}\{\int_{\Xi \times \Xi} d(\xi,\xi') \Pi(d\xi,d\xi'): \Pi(\Xi,d\xi')=\mathbb{P}(d\xi'), \Pi(d\xi,\Xi)=\mathbb{Q}(d\xi)\}$$
+
+<!-- $$
+\begin{array}{rl}
+\Xi=&R^n \times \{-1,+1\} \\
+\xi=&(x,y) \\
+d(\xi,\xi')=&\Vert x-x' \Vert+\frac{K}{2} \vert y-y'\vert
+\end{array}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\Yv82tCGCHV.svg"></div>
+
+和基于矩的分布鲁棒线性规划问题类似，先把内层问题显式地写出来：
+
+<!-- $$
+\begin{array}{ll}
+&\sup_{\mathbb{Q}\in \mathbb{B}_\epsilon(\hat{\mathbb{P}_N})} \mathbb{E}_{(x,y) \sim \mathbb{Q}}[l_\beta(x,y)]\\
+=& \sup_{\Pi} \int_\Xi l_\beta(x,y)\mathbb{Q}(d\xi) \\
+s.t & \int_{\Xi \times \Xi} d(\xi,\xi') \Pi(d\xi,d\xi') \leq \epsilon \\
+& \Pi(\Xi,d\xi')=\hat{\mathbb{P}_N}(d\xi') \\
+& \mathbb{Q}(d\xi)=\Pi(d\xi,\Xi)
+\end{array}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\0kufYePF9i.svg"></div>
+
+在本问题中， $\hat{\mathbb{P}_N}$ 是离散分布，所以：
+
+<!-- $$
+\begin{array}{ll}
+\mathbb{Q}(d\xi)&=\Pi(d\xi,\Xi)\\
+&=\int_{\xi'\in \Xi} \Pi(d\xi,d\xi')\\
+&=\sum_{i=1}^N\Pi(d\xi\vert\xi'=(\hat{x_i},\hat{y_i}))·\hat{\mathbb{P}_N}(\hat{x_i},\hat{y_i})\\
+&=\frac{1}{N}\sum_{i=1}^N\Pi(d\xi\vert\xi'=(\hat{x_i},\hat{y_i}))
+\end{array}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\OJNr4LZTop.svg"></div>
+
+把 $\Pi(d\xi\vert\xi'=(\hat{x_i},\hat{y_i}))$ 写为 $\mathbb{Q}^i(d\xi)$ ，则内层问题变为具有 $N$ 个决策变量的问题：
+
+<!-- $$
+\begin{array}{ll}
+&\sup_{\mathbb{Q}^i\geq 0} \frac{1}{N}\sum_{i=1}^N \int_{\Xi} l_\beta(\xi)\mathbb{Q}^i(d\xi)\\
+s.t & \frac{1}{N}\sum_{i=1}^N\int_{\Xi} d(\xi,(\hat{x_i},\hat{y_i})) \mathbb{Q}^i(d\xi) \leq \epsilon \\
+& \int_\Xi \mathbb{Q}^i(d\xi)=1
+\end{array}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\DF9pzGUrqF.svg"></div>
 
