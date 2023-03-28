@@ -20,7 +20,7 @@ $$W(\mathbb{P},\mathbb{Q})=\inf_{\Pi}\{\int_{\Xi \times \Xi} \mathbb{E}_{\Pi}[d(
 
 ![img](assets/symmetry_1d.png)
 
-特别地，在离散的情况下，Wasserstein 距离是把商品从一堆生产者运输到一堆需求者的最优传输距离。设 $\mathbb{P}=\sum_{i=1}^N p_i \delta_{\hat{\xi_i}}$ ， $\mathbb{Q}=\sum_{j=1}^M q_j \delta_{\hat{{\xi'}_j}}$ ，$\gamma_{ij}$ 为从 $i$ 到 $j$ 的运输计划， $c(i,j)$ 为从 $i$ 到 $j$ 的运输成本，则：
+特别地，在离散的情况下，Wasserstein 距离是把商品从一堆生产者运输到一堆需求者的最优传输距离。设 $\mathbb{P}=\sum_{i=1}^N p_i \delta_{\hat{\xi_i}}$ ， $\mathbb{Q}=\sum_{j=1}^M q_j \delta_{\hat{{\xi'}_j}}$ ， $\gamma_{ij}$ 为从 $i$ 到 $j$ 的运输计划， $c(i,j)$ 为从 $i$ 到 $j$ 的运输成本，则：
 
 $$W(\mathbb{P},\mathbb{Q})=\inf_{\gamma_{ij}>0} \{ \sum_{i,j} \gamma_{ij} · c(\xi_i,{\xi'}_j): \sum_j \gamma_{ij}=p_i, \forall i, \sum_i \gamma_{ij}=q_j, \forall j \}$$
 
@@ -46,7 +46,7 @@ $$\hat{\beta}=\arg\min_\beta \frac{1}{N} \sum_{i=1}^N l_\beta(\xi_i)=\arg\min_\b
 
 $$\hat{\beta}=\arg \min_\beta \mathbb{E}_{\hat{P_N}}[l_\beta(\xi)]+\epsilon R(\beta)$$
 
-添加正则项之后，$\beta$ 的泛化能力在实验中确实得到了提升，但这一方法的理论解释性不强。本质上来说，我们希望 $\beta$ 在样本外数据上也表现得很好，即从经验分布 $\hat{\mathbb{P}_N}$ 出发，以某种方式将真实分布 $\mathbb{P}^*$ 也纳入考虑。恰好，以经验分布 $\hat{\mathbb{P}_N}$ 为中心的 Wasserstein 球满足了我们的想法！于是，得到以下问题：
+添加正则项之后， $\beta$ 的泛化能力在实验中确实得到了提升，但这一方法的理论解释性不强。本质上来说，我们希望 $\beta$ 在样本外数据上也表现得很好，即从经验分布 $\hat{\mathbb{P}_N}$ 出发，以某种方式将真实分布 $\mathbb{P}^*$ 也纳入考虑。恰好，以经验分布 $\hat{\mathbb{P}_N}$ 为中心的 Wasserstein 球满足了我们的想法！于是，得到以下问题：
 
 $$\inf_{\beta} \sup_{\mathbb{P}\in \mathbb{B}_\epsilon(\hat{\mathbb{P}_N})} \mathbb{E}_{\mathbb{P}}[l_\beta(\xi)]$$
 
@@ -127,3 +127,39 @@ $$ -->
 
 <div align="center"><img style="background: white;" src="svg\DF9pzGUrqF.svg"></div>
 
+由于我们的标签 $y$ 只有两个，可以对 $\mathbb{Q}^i$ 进行分解：
+
+$$\mathbb{Q}^i=\mathbb{Q}^i(dx,y=1)+\mathbb{Q}^i(dx,y=-1)=\mathbb{Q}_{+1}^i(dx)+\mathbb{Q}_{-1}^i(dx)$$
+
+相应地，内层问题被写为：
+
+<!-- $$
+\begin{array}{ll}
+&\sup_{\mathbb{Q}_{±1}^i\geq 0} \frac{1}{N}\sum_{i=1}^N
+\int_{R^n}l_\beta(x,1)\mathbb{Q}_{+1}^i(dx)+l_\beta(x,-1)\mathbb{Q}_{-1}^i(dx) \\
+s.t &\frac{1}{N}\sum_{i=1}^N[\int_{R^n} d((x,1)),(\hat{x_i},\hat{y_i})) \mathbb{Q}_{+1}^i(dx)+\int_{R^n} d((x,-1)),(\hat{x_i},\hat{y_i})) \mathbb{Q}_{-1}^i(dx)] \leq \epsilon \\
+& \int_\Xi \mathbb{Q}_{+1}^i(dx)+\mathbb{Q}_{-1}^i(dx)=1
+\end{array}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\RhqqpYTOCR.svg"></div>
+
+代入成本函数并对内层问题进行整理：
+
+<!-- $$
+\begin{array}{ll}
+&\sup_{\mathbb{Q}_{±1}^i\geq 0} \frac{1}{N}\sum_{i=1}^N
+\int_{R^n}l_\beta(x,1)\mathbb{Q}_{+1}^i(dx)+l_\beta(x,-1)\mathbb{Q}_{-1}^i(dx) \\
+s.t &\frac{1}{N}\sum_{i=1}^N[\sum_{i:\hat{y_i}=1} \int_{R^n}\Vert x-\hat{x_i} \Vert \mathbb{Q}_{+1}^i(dx)+(\Vert x-\hat{x_i} \Vert+K)\mathbb{Q}_{-1}^i(dx)\\
+& \quad \sum_{i:\hat{y_i}=-1} \int_{R^n}(\Vert x-\hat{x_i} \Vert+K) \mathbb{Q}_{+1}^i(dx)+\Vert x-\hat{x_i} \Vert\mathbb{Q}_{-1}^i(dx)] \leq \epsilon \\
+& \int_\Xi \mathbb{Q}_{+1}^i(dx)+\mathbb{Q}_{-1}^i(dx)=1 \\
+=&\sup_{\mathbb{Q}_{±1}^i\geq 0} \frac{1}{N}\sum_{i=1}^N
+\int_{R^n}l_\beta(x,1)\mathbb{Q}_{+1}^i(dx)+l_\beta(x,-1)\mathbb{Q}_{-1}^i(dx) \\
+s.t &\frac{1}{N} [\int_{R^n} K \sum_{i:\hat{y_i}=1}\mathbb{Q}_{-1}^i(dx)+ K \sum_{i:\hat{y_i}=-1}\mathbb{Q}_{+1}^i(dx) + \sum_{i=1}^N \Vert x-\hat{x_i} \Vert (\mathbb{Q}_{+1}^i(dx)+\mathbb{Q}_{-1}^i(dx))] \leq \epsilon \\
+& \int_\Xi \mathbb{Q}_{+1}^i(dx)+\mathbb{Q}_{-1}^i(dx)=1 \\
+\end{array}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg\yx9bOQM3Gx.svg"></div>
+
+对约束分别引入拉格朗日乘子，写对偶：
