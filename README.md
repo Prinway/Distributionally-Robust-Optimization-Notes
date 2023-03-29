@@ -14,5 +14,6 @@ This notes assume readers the basic knowlegde of linear programming, convex prog
 
 [Moment-based DRO 基于矩的分布鲁棒优化](Moment-based-DRO.md)
 
-[Wasserstein-based DRO 基于 Wasserstein 距离的分布鲁棒优化](Wasserstein-based-DRO.md)
+[Wasserstein-based DRO 基于 Wasserstein 的分布鲁棒优化](Wasserstein-based-DRO.md)
 
+[Recent Advances 最新进展](Recent-Advances.md)
